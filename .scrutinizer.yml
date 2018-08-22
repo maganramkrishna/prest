@@ -1,0 +1,81 @@
+build:
+    environment:
+        php:
+            version: 7.1
+            ini:
+                'date.timezone': 'UTC'
+                'display_errors': 'on'
+                'display_startup_errors': 'on'
+        redis: false
+        mysql: false
+        postgresql: false
+        node: false
+
+    cache:
+        directories:
+            - vendor
+            - ~/.composer/cache
+            - ~/.local/lib
+
+    dependencies:
+        override:
+            - bash tests/_ci/install-phalcon.sh
+            - composer install --prefer-dist --no-interaction --quiet --no-ansi --no-progress --optimize-autoloader --dev --no-suggest
+
+    tests:
+        override:
+            - composer phpstan
+            - composer phpcs
+            -
+                command: 'vendor/bin/phpunit --disallow-test-output --coverage-clover ./tests/coverage/clover.xml'
+                coverage:
+                    file: 'tests/coverage/clover.xml'
+                    format: 'clover'
+
+filter:
+    paths:
+        - src/*
+    excluded_paths:
+        - tests/*
+        - vendor/*
+
+tools:
+    php_code_coverage: true
+
+    php_analyzer:
+        enabled: true
+
+    sensiolabs_security_checker:
+        enabled: true
+
+checks:
+    php:
+        code_rating: true
+        remove_extra_empty_lines: true
+        remove_php_closing_tag: true
+        remove_trailing_whitespace: true
+        fix_use_statements:
+            remove_unused: true
+            preserve_multiple: false
+            preserve_blanklines: true
+            order_alphabetically: true
+        duplication: true
+        fix_php_opening_tag: true
+        fix_linefeed: true
+        fix_line_ending: true
+        fix_identation_4spaces: true
+        avoid_fixme_comments: true
+        check_method_contracts:
+            verify_interface_like_constraints: true
+            verify_documented_constraints: true
+            verify_parent_constraints: true
+        no_long_variable_names:
+            maximum: '20'
+
+coding_style:
+    php:
+        spaces:
+            around_operators:
+                concatenation: true
+            other:
+                after_type_cast: false

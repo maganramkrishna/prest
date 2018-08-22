@@ -1,0 +1,65 @@
+{
+    "name": "preferans/prest",
+    "license": "MIT",
+    "type": "library",
+    "description": "A library focused on simplifying the creation of RESTful API's.",
+    "keywords": [
+        "phalcon",
+        "api",
+        "rest",
+        "middleware",
+        "micro",
+        "framework",
+        "preferans"
+    ],
+    "require": {
+        "php": ">=7.0 <7.2",
+        "ext-phalcon": ">=3.2.0 <4.0",
+        "league/fractal": "^0.17",
+        "ramsey/uuid" : "^3.7",
+        "firebase/php-jwt": "^5.0"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.0.x-dev",
+        "phpstan/phpstan": "@stable",
+        "phpmd/phpmd": "@stable",
+        "phpunit/phpunit": "@stable"
+    },
+    "conflict": {
+        "redound/phalcon-rest": "*",
+        "redound/phalcon-api": "*"
+    },
+    "authors": [
+        {
+            "name": "Olivier Andriessen",
+            "email": "olivierandriessen@gmail.com"
+        },
+        {
+            "name": "Bart Blok",
+            "email": "bart@wittig.nl"
+        },
+        {
+            "name": "Serghei Iakovlev",
+            "email": "serghei@phalconphp.coms"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Prest\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PrestTest\\": "tests/PrestTest/"
+        }
+    },
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan analyse -l 2 src",
+        "phpmd": "vendor/bin/phpmd src text codesize,unusedcode,naming,cleancode,design",
+        "phpcs": "vendor/bin/phpcs",
+        "phpunit": "vendor/bin/phpunit --disallow-test-output --coverage-clover ./tests/coverage/clover.xml"
+    }
+}
